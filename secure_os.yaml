@@ -1,0 +1,5 @@
+---
+- name: Securing the RHEL7 server
+  hosts:  all
+  roles:
+    - { role: secure_base_os }
