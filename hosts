@@ -1,0 +1,8 @@
+#===================================
+# Example inventory file for demo
+# Simple example for my own gratification
+#===================================
+
+[secure_servers]
+goldbuild   ansible_port=22     ansible_host=192.168.0.227
+

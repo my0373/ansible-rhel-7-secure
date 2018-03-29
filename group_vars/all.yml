@@ -1,0 +1,12 @@
+---
+## The name of the non priviliged user.
+nonpriv_user: ansible
+nonpriv_uid: 1337
+
+## The name of the non priviliged user.
+nonpriv_group: ansible
+nonpriv_gid: 1337
+
+## The file in ansible-rhel-7-secure/roles/files/keys that holds the public key.
+ansible_nonpriv_user_public_key: "{{ lookup('file', 'keys/ansible_user.pub') }}"
+

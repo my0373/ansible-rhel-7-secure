@@ -1,2 +1,5 @@
 ---
-# tasks file for secure_base_os
+  - name: "Test connectivity"
+    import_tasks: test_connectivity.yml
+  - name: "Non privileged users"
+    import_tasks: ansible_user.yml

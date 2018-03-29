@@ -1,0 +1,6 @@
+---
+    ## Attempt to contact the target server as the root user
+    - name: "testing SSH connectivity as root to {{ DAVE }}"
+      ping:
+      become: yes
+      remote_user: root

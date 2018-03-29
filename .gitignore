@@ -1,13 +1,18 @@
 ## Exclude any python bytecode
 *.pyc
+
 ## Exclude any ide files
 *.idea
 *.db
+
+## Any retry files
+*.retry
 
 ## Exclude any rogue osx files
 *ds_store*
 
 ## Exclude any keys
 id_rsa
-id_rsa.pub
+id_dsa
+*.pub
 

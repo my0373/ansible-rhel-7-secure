@@ -1,0 +1,38 @@
+---
+    ## Create a non privileged group
+    - name: "Creating non priviledged group {{ nonpriv_group }}"
+      group:
+        name: "{{ nonpriv_group }}"
+        gid: "{{ nonpriv_gid }}"
+
+
+    ## Attempt to contact the target server as the root user
+    - name: "Creating non privileged user {{ nonpriv_user }}"
+      user:
+        name: "{{ nonpriv_user }}"
+        comment: "Ansible nonpriv user"
+        uid: "{{ nonpriv_uid }}"
+        group: "{{ nonpriv_group }}"
+
+    ## Install the ssh public key to connect to the target hosts with no password.
+    - name: Add ssh user keys
+      authorized_key: user="{{ nonpriv_user }}" key="{{ ansible_nonpriv_user_public_key }}"
+
+    ## Allow users in the ansible group to have passwordless sudo
+    - name: Allow 'wheel' group to have passwordless sudo
+      blockinfile:
+        path: /etc/sudoers
+        block: |
+
+          ## Allow users in the ansible group to have passwordless sudo
+          %{{ nonpriv_group }} ALL=(ALL) NOPASSWD: ALL
+
+        validate: visudo -cf %s
+      remote_user: root
+
+    ## Attempt to contact the target server as the new user
+    - name: "testing SSH connectivity as root to {{ nonpriv_user }}"
+      ping:
+      become: yes
+      remote_user: ansible
+

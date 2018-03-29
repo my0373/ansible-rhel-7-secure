@@ -1,12 +1,28 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+ansible-rhel-7-secure
+
+Description
+------------
+A role that will take a default Red Hat Enterprise Linux system and harden it with some sensible defaults.
+
+####SSH key based authentication
+There is an expectation that you will be using SSH key authentication.
+
+For convenience the role includes a script to setup passwordless authentication on the target host.
+
+###### Warning! By default we will create a new user called ansible, and copy the public key in
+   ansible-rhel-7-secure/roles/secure_base_os/files/keys/ansible_user.pub
+
+Configuration
+------------
+By default we will create a new user called ansible, and copy the public key in
+   ansible-rhel-7-secure/roles/secure_base_os/files/keys/ansible_user.pub
 
 Requirements
 ------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+askpass - When running in ssh interactive password mode
 
 Role Variables
 --------------
