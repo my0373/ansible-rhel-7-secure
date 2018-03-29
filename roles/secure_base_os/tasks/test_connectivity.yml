@@ -1,6 +1,6 @@
 ---
-    ## Attempt to contact the target server as the root user
-    - name: "testing SSH connectivity as root to {{ DAVE }}"
+    ## Attempt to contact the target server as the new user
+    - name: "testing SSH connectivity as {{ nonpriv_user }} to {{ ansible_hostname }}"
       ping:
       become: yes
-      remote_user: root
+      remote_user: "{{ nonpriv_user }}"

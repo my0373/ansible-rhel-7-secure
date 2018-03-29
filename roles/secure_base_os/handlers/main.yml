@@ -1,2 +1,4 @@
 ---
-# handlers file for secure_base_os
+  - name: restart sshd
+    service: name=sshd state=restarted
+    become: yes

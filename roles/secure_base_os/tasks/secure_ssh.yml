@@ -1,0 +1,42 @@
+---
+    ## Disable password authentication
+    - name: "Set ssh port number to {{  rhel_ssh_port }}"
+      lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^Port\s"
+              line="Port {{ rhel_ssh_port }}"
+              state=present
+      become: yes
+      notify: restart sshd
+      when: ssh_enforce_port_number
+
+
+    - name: "Allow SSH password authentication ? : {{ ssh_allow_password_authentication }} "
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^PasswordAuthentication"
+                  line="PasswordAuthentication {{ ssh_allow_password_authentication }}"
+                  state=present
+      become: yes
+      notify: restart sshd
+      when: ssh_enforce_disable_password_authentication
+
+    - name: "Allow root SSH access ? : {{ ssh_permit_root_login }}"
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^PermitRootLogin"
+                  line="PermitRootLogin {{ ssh_permit_root_login }}"
+                  state=present
+      become: yes
+      notify: restart sshd
+      when: ssh_enforce_disable_root_access
+
+
+    - name: "Allow ssh tunneling ? : {{ ssh_permit_tunnel }}"
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^.*PermitTunnel.*$"
+                  line="PermitTunnel {{ ssh_permit_tunnel }}"
+                  state=present
+      become: yes
+      notify: restart sshd
+      when: ssh_enforce_tunneling_rules
+
+
+

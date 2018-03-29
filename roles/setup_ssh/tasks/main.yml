@@ -1,6 +1,5 @@
 ---
   - name: "Test connectivity"
     import_tasks: test_connectivity.yml
-
-  - name: "Start securing SSH Server"
-    import_tasks: secure_ssh.yml
+  - name: "Non privileged users"
+    import_tasks: ansible_user.yml

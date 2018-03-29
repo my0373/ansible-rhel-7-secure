@@ -1,12 +1,56 @@
 ---
+##########################
+#### Ansible check flags.
+## Each of the settings in this block will determine if a specific check is run.
+## This playbook contains a large number of security changes, and these flags will allow you to pick and choose which checks to run
+##########################
+
+##########################
+## SSH Security checks
+
+## Manage root ssh access
+ssh_enforce_disable_root_access: yes
+
+## Enforce SSH tunnelling rules
+ssh_enforce_tunneling_rules: yes
+
+## Enforce rule to disable SSH password based logins
+ssh_enforce_disable_password_authentication: yes
+
+## Enforce the rules for a default port number
+ssh_enforce_port_number: yes
+
+###########################
+#### Ansible check settings
+
+## Each check in this block will provide specific settings to each check.
+
+
+#### User authentication
 ## The name of the non priviliged user.
 nonpriv_user: ansible
 nonpriv_uid: 1337
 
-## The name of the non priviliged user.
+## The name of the non priviliged group.
 nonpriv_group: ansible
 nonpriv_gid: 1337
 
-## The file in ansible-rhel-7-secure/roles/files/keys that holds the public key.
+## The file in ansible-rhel-7-secure/roles/setup_ssh/files/keys that holds the public key.
 ansible_nonpriv_user_public_key: "{{ lookup('file', 'keys/ansible_user.pub') }}"
 
+
+######## SSHD specific rules
+## Disable password based ssh authentication - Must be "yes" or "no" in quotes
+disable_ssh_passwords: "yes"
+
+## The default RHEL7 SSH port
+rhel_ssh_port: "22"
+
+## Permit ssh tunneling - Must be "yes" or "no" in quotes
+ssh_permit_tunnel: "yes"
+
+## Permit users to log in as the root user. Must be "yes" or "no" in quotes
+ssh_permit_root_login: "yes"
+
+## Permit users to log in using passwords via ssh
+ssh_allow_password_authentication: "yes"

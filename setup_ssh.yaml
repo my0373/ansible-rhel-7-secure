@@ -1,0 +1,5 @@
+---
+- name: Securing the RHEL7 server
+  hosts:  all
+  roles:
+    - { role: setup_ssh }
