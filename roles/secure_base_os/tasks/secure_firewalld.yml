@@ -1,0 +1,21 @@
+---
+    - name: "Enable firewalld"
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+      become: yes
+      notify: restart firewalld
+
+    ## Disable password authentication
+    - name: "Enable firewalld"
+      firewalld:
+        source: 0.0.0.0/0
+        state: enabled
+
+      become: yes
+      notify: restart sshd
+      when: enforce_firewalld_enable
+
+
+

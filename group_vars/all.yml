@@ -20,6 +20,16 @@ ssh_enforce_disable_password_authentication: yes
 ## Enforce the rules for a default port number
 ssh_enforce_port_number: yes
 
+## Allow the configuration of firewalld to accept connections on the port
+ssh_open_firewalld_port: yes
+
+
+
+###########################
+## Firewalld flags
+
+enforce_firewalld_enable: yes
+
 ###########################
 #### Ansible check settings
 
@@ -44,7 +54,8 @@ ansible_nonpriv_user_public_key: "{{ lookup('file', 'keys/ansible_user.pub') }}"
 disable_ssh_passwords: "yes"
 
 ## The default RHEL7 SSH port
-rhel_ssh_port: "22"
+#rhel_ssh_port: "22"
+rhel_ssh_port: "22222"
 
 ## Permit ssh tunneling - Must be "yes" or "no" in quotes
 ssh_permit_tunnel: "yes"

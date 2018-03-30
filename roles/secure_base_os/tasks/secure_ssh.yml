@@ -1,6 +1,6 @@
 ---
     ## Disable password authentication
-    - name: "Set ssh port number to {{  rhel_ssh_port }}"
+    - name: "Set ssh port number to {{ rhel_ssh_port }}"
       lineinfile: dest=/etc/ssh/sshd_config
               regexp="^Port\s"
               line="Port {{ rhel_ssh_port }}"
@@ -10,9 +10,21 @@
       when: ssh_enforce_port_number
 
 
+    ## This step will fail if firewalld isn't running. Since this won't cause us a problem we just skip on error
+    - name: "Open firewalld port number to {{ rhel_ssh_port }}"
+      firewalld:
+        port: "{{ rhel_ssh_port }}/tcp"
+        permanent: yes
+        state: enabled
+        immediate: yes
+      become: yes
+      when: ssh_open_firewalld_port
+      ignore_errors: yes
+
+
     - name: "Allow SSH password authentication ? : {{ ssh_allow_password_authentication }} "
       lineinfile: dest=/etc/ssh/sshd_config
-                  regexp="^PasswordAuthentication"
+                  regexp="^.*PasswordAuthentication.*"
                   line="PasswordAuthentication {{ ssh_allow_password_authentication }}"
                   state=present
       become: yes
@@ -21,7 +33,7 @@
 
     - name: "Allow root SSH access ? : {{ ssh_permit_root_login }}"
       lineinfile: dest=/etc/ssh/sshd_config
-                  regexp="^PermitRootLogin"
+                  regexp="^.*PermitRootLogin.*$"
                   line="PermitRootLogin {{ ssh_permit_root_login }}"
                   state=present
       become: yes

@@ -2,5 +2,8 @@
   - name: "Test connectivity"
     import_tasks: test_connectivity.yml
 
+  - name: "Secure Firewalld"
+    import_tasks: secure_firewalld.yml
+
   - name: "Start securing SSH Server"
     import_tasks: secure_ssh.yml
